@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retos de Boda | Wedding Challenges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Iconos para subir evidencia y check -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="elegant-background"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="lang-toggle">
+                <button id="btn-es" class="lang-btn active">ES</button>
+                <button id="btn-en" class="lang-btn">EN</button>
+            </div>
+            
+            <h1 class="elegant-title" id="title">Retos de Boda</h1>
+            
+            <div class="decorative-divider">
+                <div class="line"></div>
+                <div class="diamond"></div>
+                <div class="line"></div>
+            </div>
+            
+            <p class="instructions" id="instructions">
+                ¡Diviértete completando estos retos durante la fiesta! <br> Marca cada reto logrado y sube tu evidencia.
+            </p>
+
+            <div class="player-info" id="player-info-container" style="display: none;">
+                <p class="player-name"><span id="lbl-player">Jugador</span>: <strong id="display-name"></strong></p>
+                <div class="score-display">
+                    <i class="fa-solid fa-star"></i> <span id="display-score">0</span> <span id="lbl-pts">pts</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="gold-btn action-btn outline-btn" id="btn-leaderboard">
+                    <i class="fa-solid fa-trophy"></i> <span id="lbl-leaderboard-btn">Tablero Global</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="challenges-list" id="challenges-list">
+            <!-- Challenges will be dynamically injected here -->
+        </main>
+        
+        <div class="conclude-section" style="margin-top: 3rem; margin-bottom: 2rem; text-align: center; background: var(--bg-card); padding: 1.5rem; border: 1px solid var(--gold); border-radius: 8px;">
+            <p id="conclude-desc" class="instructions" style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--gold-dark); font-weight: 500;">
+                Da click cuando te sientas satisfecho con tus retos cumplidos para concluir tu participación
+            </p>
+            <button class="gold-btn win-btn" id="btn-conclude" style="padding: 1rem 2rem; width: 100%; max-width: 400px; font-size: 1.1rem;">
+                <i class="fa-solid fa-flag-checkered"></i> <span id="lbl-conclude-btn">Concluir mi participación</span>
+            </button>
+        </div>
+
+        <footer class="footer">
+            <p id="footer-text">Laura & Marcus 09.05.2026</p>
+        </footer>
+    </div>
+    
+    <!-- Name Entry Modal -->
+    <div id="name-modal" class="modal">
+        <div class="modal-content classic-border">
+            <h2 id="name-title" class="elegant-title modal-title">¡Bienvenido!</h2>
+            <p id="name-instruction" class="modal-text">Ingresa tu nombre para comenzar.</p>
+            <input type="text" id="guest-name-input" class="elegant-input" placeholder="Tu nombre" autocomplete="off">
+            <button class="gold-btn win-btn" id="name-submit-btn">Comenzar</button>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboard-modal" class="modal">
+        <div class="modal-content classic-border">
+            <button class="close-btn" id="close-leaderboard">&times;</button>
+            <h2 id="leaderboard-title" class="elegant-title modal-title"><i class="fa-solid fa-trophy" style="color:var(--gold)"></i> Tablero Global</h2>
+            <p id="leaderboard-instruction" class="modal-text" style="font-size:0.9rem; margin-bottom: 1rem;">Líderes actuales del juego</p>
+            <div class="leaderboard-list" id="leaderboard-list">
+                <!-- Leaderboard data -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
