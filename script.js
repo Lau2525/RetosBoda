@@ -4,18 +4,21 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLTiDv_CqCXT
 
 
 const challenges = [
-    { id: "c1", points: 20, es: "Tómate una selfie con los novios", en: "Take a selfie with the bride and groom" },
-    { id: "c2", points: 10, es: "Haz un brindis con alguien que no conozcas", en: "Make a toast with someone you don't know" },
-    { id: "c3", points: 10, es: "Baila con una abuela o abuelo", en: "Dance with a grandmother or grandfather" },
-    { id: "c4", points: 10, es: "Saca una foto a un momento romántico oculto", en: "Snap a photo of a hidden romantic moment" },
-    { id: "c5", points: 10, es: "Tómate una foto divertida en el photobooth con amigos", en: "Take a funny photo in the photobooth with friends" },
-    { id: "c6", points: 10, es: "Pide al DJ una canción y baila en el centro de la pista", en: "Request a song and dance in the middle of the dance floor" },
-    { id: "c7", points: 10, es: "Deja un mensaje original en el libro de firmas", en: "Leave an original message in the guestbook" },
-    { id: "c8", points: 10, es: "Encuentra a alguien que lleve un vestido/traje similar al tuyo", en: "Find someone wearing an outfit similar to yours" },
-    { id: "c9", points: 15, es: "Tómale una foto a tu platillo favorito de la fiesta", en: "Take a picture of your favorite dish at the party" },
-    { id: "c10", points: 10, es: "Tómate un shot con los novios", en: "Take a shot with the bride and groom" },
-    { id: "c11", points: 50, isBonus: true, es: "Bonus: Atrapa el ramo de la novia", en: "Bonus: Catch the bride's bouquet" },
-    { id: "c12", points: 50, isBonus: true, es: "Bonus: Atrapa el azahar del novio", en: "Bonus: Catch the groom's boutonniere" }
+    { id: "c1", points: 10, es: "Dile un cumplido a los novios", en: "Give the couple a compliment" },
+    { id: "c2", points: 50, isBonus: true, es: "Bonus: Tómate una selfie con los novios", en: "Bonus: Take a selfie with the bride and groom" },
+    { id: "c3", points: 10, es: "Saca una foto en la pista de baile", en: "Take a photo on the dance floor" },
+    { id: "c4", points: 10, es: "Brinda con alguien", en: "Make a toast with someone" },
+    { id: "c5", points: 20, es: "Graba un mini mensaje de buenos deseos para los esposos", en: "Record a short video message for the newlyweds" },
+    { id: "c6", points: 15, es: "Tómale foto a tu platillo favorito de la celebración", en: "Take a photo of your favorite dish at the celebration" },
+    { id: "c7", points: 50, isBonus: true, es: "Bonus: Atrapa el ramo de la novia", en: "Bonus: Catch the bride's bouquet" },
+    { id: "c8", points: 50, isBonus: true, es: "Bonus: Atrapa el azahar del novio", en: "Bonus: Catch the groom's boutonniere" },
+    { id: "c13", points: 50, isBonus: true, es: "Bonus: Brinda con los novios", en: "Bonus: Toast with the bride and groom" },
+    { id: "c9", points: 15, es: "Foto con alguien que no conocías antes de la boda", en: "Take a photo with someone you didn't know before the wedding" },
+    { id: "c10", points: 15, es: "Consigue una foto con alguien que lleve tu mismo color de outfit", en: "Get a photo with someone wearing your same outfit color" },
+    { id: "c11", points: 20, es: "Captura un momento romántico entre los novios", en: "Capture a romantic moment between the bride and groom" },
+    { id: "c12", points: 10, es: "Tómale una foto al pastel de bodas", en: "Take a picture of the wedding cake" },
+    { id: "c14", points: 15, es: "Pide al DJ una canción especial", en: "Request a special song from the DJ" },
+    { id: "c15", points: 20, es: "Gritar ¡Que vivan los novios!, ¡Beso, beso! o comenzar una porra", en: "Shout 'Long live the newlyweds!', 'Kiss, kiss!' or start a cheer" }
 ];
 
 const uiTexts = {
@@ -36,6 +39,7 @@ const uiTexts = {
         uploading: "Subiendo nube... ⏳",
         errUpload: "Error al subir ❌",
         viewPhoto: "Ver Foto (Drive)",
+        bonusSectionTitle: "💍 Bonus Especiales 💍",
         concludeDesc: "Da click cuando te sientas satisfecho con tus retos cumplidos para concluir tu participación",
         concludeBtn: "Concluir mi participación",
         concludeSuccess: "¡Gracias por participar! Tu evidencia y tus puntos han sido enviados a los novios directamente.",
@@ -58,6 +62,7 @@ const uiTexts = {
         uploading: "Uploading cloud... ⏳",
         errUpload: "Upload Error ❌",
         viewPhoto: "View Photo (Drive)",
+        bonusSectionTitle: "💍 Special Bonuses 💍",
         concludeDesc: "Click when you feel satisfied with your completed challenges to conclude your participation",
         concludeBtn: "Conclude my participation",
         concludeSuccess: "Thank you for participating! Your evidence and points have been sent to the couple.",
@@ -99,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadState();
 
     const listContainer = document.getElementById("challenges-list");
+    const bonusContainer = document.getElementById("bonus-list");
+    const bonusTitle = document.getElementById("bonus-title");
     const btnEs = document.getElementById("btn-es");
     const btnEn = document.getElementById("btn-en");
     
@@ -113,6 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderChallenges() {
         listContainer.innerHTML = '';
+        if (bonusContainer) bonusContainer.innerHTML = '';
+        let hasBonus = false;
         
         challenges.forEach(item => {
             const el = document.createElement("div");
@@ -142,7 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     <input type="file" id="file-${item.id}" class="file-input" accept="image/*,video/*">
                 </div>
             `;
-            listContainer.appendChild(el);
+            if (item.isBonus && bonusContainer) {
+                bonusContainer.appendChild(el);
+                hasBonus = true;
+            } else {
+                listContainer.appendChild(el);
+            }
             
             const checkbox = document.getElementById(`check-${item.id}`);
             const fileInput = document.getElementById(`file-${item.id}`);
@@ -240,6 +254,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
+
+        if (bonusTitle && bonusContainer) {
+            bonusTitle.style.display = hasBonus ? "block" : "none";
+        }
     }
 
     function calculatePoints() {
@@ -265,6 +283,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("lbl-pts").textContent = uiTexts[lang].ptsLbl;
         document.getElementById("lbl-leaderboard-btn").textContent = uiTexts[lang].leaderboardBtn;
         
+        if (bonusTitle) {
+            bonusTitle.textContent = uiTexts[lang].bonusSectionTitle;
+        }
+
         document.getElementById("conclude-desc").textContent = uiTexts[lang].concludeDesc;
         document.getElementById("lbl-conclude-btn").textContent = uiTexts[lang].concludeBtn;
         
