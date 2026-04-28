@@ -231,7 +231,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding-right: 40px; /* space for points badge */
+    padding-right: 70px; /* space for points badge */
 }
 
 .challenge-checkbox {
