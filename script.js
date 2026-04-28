@@ -4,29 +4,31 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLTiDv_CqCXT
 
 
 const challenges = [
-    { id: "c1", points: 10, es: "Dile un cumplido a los novios", en: "Give the couple a compliment" },
-    { id: "c2", points: 50, isBonus: true, es: "Bonus: Tómate una selfie con los novios", en: "Bonus: Take a selfie with the bride and groom" },
-    { id: "c3", points: 10, es: "Saca una foto en la pista de baile", en: "Take a photo on the dance floor" },
-    { id: "c4", points: 10, es: "Brinda con alguien", en: "Make a toast with someone" },
-    { id: "c5", points: 20, es: "Graba un mini mensaje de buenos deseos para los esposos", en: "Record a short video message for the newlyweds" },
-    { id: "c6", points: 15, es: "Tómale foto a tu platillo favorito de la celebración", en: "Take a photo of your favorite dish at the celebration" },
-    { id: "c7", points: 50, isBonus: true, es: "Bonus: Atrapa el ramo de la novia", en: "Bonus: Catch the bride's bouquet" },
-    { id: "c8", points: 50, isBonus: true, es: "Bonus: Atrapa el azahar del novio", en: "Bonus: Catch the groom's boutonniere" },
-    { id: "c13", points: 50, isBonus: true, es: "Bonus: Brinda con los novios", en: "Bonus: Toast with the bride and groom" },
-    { id: "c9", points: 15, es: "Foto con alguien que no conocías antes de la boda", en: "Take a photo with someone you didn't know before the wedding" },
-    { id: "c10", points: 15, es: "Consigue una foto con alguien que lleve tu mismo color de outfit", en: "Get a photo with someone wearing your same outfit color" },
-    { id: "c11", points: 20, es: "Captura un momento romántico entre los novios", en: "Capture a romantic moment between the bride and groom" },
-    { id: "c12", points: 10, es: "Tómale una foto al pastel de bodas", en: "Take a picture of the wedding cake" },
-    { id: "c14", points: 15, es: "Pide al DJ una canción especial", en: "Request a special song from the DJ" },
-    { id: "c15", points: 20, es: "Gritar ¡Que vivan los novios!, ¡Beso, beso! o comenzar una porra", en: "Shout 'Long live the newlyweds!', 'Kiss, kiss!' or start a cheer" }
+    { id: "c1", points: 10, es: "Dile un cumplido a los novios 💬", en: "Give the couple a compliment 💬" },
+    { id: "c2", points: 50, isBonus: true, es: "Bonus: Tómate una selfie con los novios 📸 (sin ser invasiv@)", en: "Bonus: Take a selfie with the bride and groom 📸 (without being intrusive)" },
+    { id: "c3", points: 10, es: "Toma una foto en la pista de baile 💃", en: "Take a photo on the dance floor 💃" },
+    { id: "c4", points: 10, es: "Brinda con alguien 🥂", en: "Make a toast with someone 🥂" },
+    { id: "c5", points: 20, es: "Graba un mini mensaje de buenos deseos para los esposos 💌", en: "Record a short video message for the newlyweds 💌" },
+    { id: "c6", points: 15, es: "Tómale foto a tu platillo favorito de la celebración 🍽️", en: "Take a photo of your favorite dish at the celebration 🍽️" },
+    { id: "c7", points: 50, isBonus: true, es: "Bonus: Atrapa el ramo de la novia 💐", en: "Bonus: Catch the bride's bouquet 💐" },
+    { id: "c13", points: 50, isBonus: true, es: "Bonus: Brinda con los novios 🍾", en: "Bonus: Toast with the bride and groom 🍾" },
+    { id: "c9", points: 15, es: "Foto con alguien que no conocías antes de la boda 🤝", en: "Take a photo with someone you didn't know before the wedding 🤝" },
+    { id: "c10", points: 15, es: "Consigue una foto con alguien que lleve tu mismo color de outfit 👗", en: "Get a photo with someone wearing your same outfit color 👗" },
+    { id: "c11", points: 20, es: "Captura un momento romántico entre los novios ✨", en: "Capture a romantic moment between the bride and groom ✨" },
+    { id: "c12", points: 10, es: "Tómale una foto al pastel de bodas 🎂", en: "Take a picture of the wedding cake 🎂" },
+    { id: "c14", points: 15, es: "Pide al DJ una canción especial 🎶", en: "Request a special song from the DJ 🎶" },
+    { id: "c15", points: 20, es: "Gritar ¡Que vivan los novios!, ¡Beso, beso! o comenzar una porra 🥳", en: "Shout 'Long live the newlyweds!', 'Kiss, kiss!' or start a cheer 🥳" },
+    { id: "c16", points: 15, es: "Juega al menos uno de los juegos que preparamos para ti 🎟️", en: "Play at least one of the games we prepared for you 🎟️" },
+    { id: "c18", points: 15, es: "Toma una foto aesthetic del evento o de tu lugar favorito en la fiesta 📷", en: "Take an aesthetic photo of the event or your favorite spot at the party 📷" },
+    { id: "c17", points: 50, isBonus: true, es: "Bonus: ¡Sé el ganador en el Bingo! 🏆", en: "Bonus: Be the Bingo winner! 🏆" }
 ];
 
 const uiTexts = {
     es: {
         title: "Retos de Boda",
-        instructions: "¡Diviértete completando estos retos durante la fiesta!<br>Marca cada reto logrado, GANA PUNTOS y sube tu evidencia.",
-        uploadLabel: "Subir foto",
-        uploadedLabel: "Foto lista",
+        instructions: "¡Diviértete completando estos retos durante la fiesta!<br>GANA PUNTOS y sube tus pruebas (foto, video o texto) según sea el caso para cada reto.",
+        uploadLabel: "Subir evidencia (Foto/Video)",
+        uploadedLabel: "Prueba lista",
         playerLbl: "Jugador",
         ptsLbl: "pts",
         leaderboardBtn: "Tablero Global",
@@ -35,10 +37,12 @@ const uiTexts = {
         startBtn: "Comenzar",
         lbTitle: "Tablero Global",
         lbInstr: "Líderes de la boda en vivo",
+        lbTip: "¡Dale clic al tablero global para ver los puntos de los otros jugadores en tiempo real!",
         ptsWord: "pts",
         uploading: "Subiendo nube... ⏳",
         errUpload: "Error al subir ❌",
-        viewPhoto: "Ver Foto (Drive)",
+        viewPhoto: "Ver Archivo (Drive)",
+        textPlaceholder: "...o escribe directamente tu prueba aquí",
         bonusSectionTitle: "💍 Bonus Especiales 💍",
         concludeDesc: "Da click cuando te sientas satisfecho con tus retos cumplidos para concluir tu participación",
         concludeBtn: "Concluir mi participación",
@@ -47,9 +51,9 @@ const uiTexts = {
     },
     en: {
         title: "Wedding Challenges",
-        instructions: "Have fun completing these challenges!<br>Check off achieved challenges, EARN POINTS, and upload evidence.",
-        uploadLabel: "Upload photo",
-        uploadedLabel: "Photo ready",
+        instructions: "Have fun completing these challenges!<br>EARN POINTS and upload your proof (photo, video, or text) depending on what the challenge asks for.",
+        uploadLabel: "Upload file (Photo/Video)",
+        uploadedLabel: "Evidence ready",
         playerLbl: "Player",
         ptsLbl: "pts",
         leaderboardBtn: "Leaderboard",
@@ -58,10 +62,12 @@ const uiTexts = {
         startBtn: "Start",
         lbTitle: "Global Leaderboard",
         lbInstr: "Live wedding leaders",
+        lbTip: "Click the global leaderboard to see other players' live scores!",
         ptsWord: "pts",
         uploading: "Uploading cloud... ⏳",
         errUpload: "Upload Error ❌",
-        viewPhoto: "View Photo (Drive)",
+        viewPhoto: "View File (Drive)",
+        textPlaceholder: "...or write your evidence directly here",
         bonusSectionTitle: "💍 Special Bonuses 💍",
         concludeDesc: "Click when you feel satisfied with your completed challenges to conclude your participation",
         concludeBtn: "Conclude my participation",
@@ -74,6 +80,7 @@ let currentLang = 'es';
 let playerName = '';
 let completedChallenges = [];
 let uploadedUrls = {}; // Store image URLs
+let writtenTexts = {}; // Store written text evidence
 let totalPoints = 0;
 
 function getBase64(file, callback) {
@@ -143,14 +150,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     <input type="checkbox" class="challenge-checkbox" id="check-${item.id}" ${isCompleted}>
                     <label for="check-${item.id}" class="challenge-text">${textToShow}</label>
                 </div>
-                <div class="challenge-actions">
-                    <span class="file-name" id="filename-${item.id}"></span>
-                    <label class="upload-lbl" for="file-${item.id}">
-                        <i class="fa-solid fa-camera"></i> <span id="upload-txt-${item.id}">${uploadBtnText}</span>
-                    </label>
-                    <input type="file" id="file-${item.id}" class="file-input" accept="image/*,video/*">
+                <div class="challenge-actions" style="flex-direction: column; align-items: stretch; gap: 0.8rem; margin-top: 0.8rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="file-name" id="filename-${item.id}"></span>
+                        <label class="upload-lbl" for="file-${item.id}">
+                            <i class="fa-solid fa-camera"></i> <span id="upload-txt-${item.id}">${uploadBtnText}</span>
+                        </label>
+                        <input type="file" id="file-${item.id}" class="file-input" accept="image/*,video/*">
+                    </div>
+                    <input type="text" id="text-${item.id}" placeholder="${uiTexts[currentLang].textPlaceholder}" style="font-size: 0.95rem; padding: 0.6rem; border: 1px dashed var(--gold); border-radius: 4px; background: rgba(255,255,255,0.4); width: 100%; box-sizing: border-box; color: var(--text-dark); outline: none;">
                 </div>
             `;
+            
             if (item.isBonus && bonusContainer) {
                 bonusContainer.appendChild(el);
                 hasBonus = true;
@@ -162,9 +173,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const fileInput = document.getElementById(`file-${item.id}`);
             const filenameSpan = document.getElementById(`filename-${item.id}`);
             const uploadTxt = document.getElementById(`upload-txt-${item.id}`);
+            const textInput = document.getElementById(`text-${item.id}`);
 
             if (uploadedUrls[item.id]) {
                 filenameSpan.innerHTML = `<a href="${uploadedUrls[item.id]}" target="_blank" style="color:var(--gold); font-size: 0.8rem; text-decoration: underline;">${uiTexts[currentLang].viewPhoto}</a>`;
+            }
+            if (writtenTexts[item.id]) {
+                textInput.value = writtenTexts[item.id];
+            }
+
+            function markCompleted() {
+                if (!checkbox.checked) {
+                    checkbox.checked = true;
+                    el.classList.add('completed');
+                    if (!completedChallenges.includes(item.id)) {
+                        completedChallenges.push(item.id);
+                    }
+                    calculatePoints();
+                }
             }
 
             checkbox.addEventListener('change', (e) => {
@@ -178,6 +204,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     completedChallenges = completedChallenges.filter(id => id !== item.id);
                 }
                 calculatePoints();
+            });
+
+            textInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                if (val) {
+                    writtenTexts[item.id] = val;
+                    markCompleted(); // Automatically check it if they write something
+                } else {
+                    delete writtenTexts[item.id];
+                }
+                saveState();
             });
 
             fileInput.addEventListener('change', (e) => {
@@ -241,17 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     delete uploadedUrls[item.id];
                     saveState();
                 }
-
-                function markCompleted() {
-                    if (!checkbox.checked) {
-                        checkbox.checked = true;
-                        el.classList.add('completed');
-                        if (!completedChallenges.includes(item.id)) {
-                            completedChallenges.push(item.id);
-                        }
-                        calculatePoints();
-                    }
-                }
             });
         });
 
@@ -283,6 +309,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("lbl-pts").textContent = uiTexts[lang].ptsLbl;
         document.getElementById("lbl-leaderboard-btn").textContent = uiTexts[lang].leaderboardBtn;
         
+        if (document.getElementById("leaderboard-tip")) {
+            document.getElementById("leaderboard-tip").textContent = uiTexts[lang].lbTip;
+        }
+
         if (bonusTitle) {
             bonusTitle.textContent = uiTexts[lang].bonusSectionTitle;
         }
@@ -303,6 +333,11 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const uploadTxt = document.getElementById(`upload-txt-${item.id}`);
             const filenameSpan = document.getElementById(`filename-${item.id}`);
+            const textInput = document.getElementById(`text-${item.id}`);
+
+            if (textInput) {
+                textInput.placeholder = uiTexts[lang].textPlaceholder;
+            }
 
             if (uploadedUrls[item.id]) {
                 if (uploadTxt) uploadTxt.textContent = uiTexts[lang].uploadedLabel;
@@ -344,6 +379,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 uploadedUrls = JSON.parse(savedUrls);
             } catch(e) {}
         }
+
+        const savedTexts = localStorage.getItem('weddingChallengesTexts');
+        if (savedTexts) {
+            try {
+                writtenTexts = JSON.parse(savedTexts);
+            } catch(e) {}
+        }
     }
 
     function saveState() {
@@ -351,6 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('weddingChallengesName', playerName);
         localStorage.setItem('weddingChallengesCompleted', JSON.stringify(completedChallenges));
         localStorage.setItem('weddingChallengesUrls', JSON.stringify(uploadedUrls));
+        localStorage.setItem('weddingChallengesTexts', JSON.stringify(writtenTexts));
     }
 
     function checkName() {
@@ -421,7 +464,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderMockLeaderboard();
             });
         } else {
-            // Fallback en caso de que borre su url por error
             renderMockLeaderboard();
         }
 
@@ -455,12 +497,20 @@ document.addEventListener("DOMContentLoaded", () => {
     btnConclude.addEventListener("click", () => {
         let urlListText = "";
         
-        // Sumar todos los links a las fotos de su Drive
+        // Sumar todos los links a las fotos y textos escritos
         completedChallenges.forEach(id => {
             const match = challenges.find(c => c.id === id);
             if (match) {
                 const title = match[currentLang];
-                const link = uploadedUrls[id] ? uploadedUrls[id] : (currentLang === 'es' ? "(No adjuntó foto)" : "(No photo attached)");
+                let link = "";
+                
+                if (uploadedUrls[id]) link += `Archivo adjunto: ${uploadedUrls[id]} \n  `;
+                if (writtenTexts[id]) link += `Nota escrita: "${writtenTexts[id]}"`;
+                
+                if (!link) {
+                    link = currentLang === 'es' ? "(Marcado sin adjuntar prueba)" : "(Checked without attaching proof)";
+                }
+                
                 urlListText += `- ${title}:\n  ${link}\n\n`;
             }
         });
@@ -513,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 : `Wedding Challenges - ${playerName}'s Participation`;
             
             const body = currentLang === 'es'
-                ? `¡Hola!\nHe concluido mi participación y he conseguido ${totalPoints} puntos.\nAquí están mis links si alguna me funcionó:\n\n${urlListText}Con cariño,\n${playerName}`
+                ? `¡Hola!\nHe concluido mi participación y he conseguido ${totalPoints} puntos.\nAquí están mis links y notas escritas de los retos:\n\n${urlListText}Con cariño,\n${playerName}`
                 : `Hello!\nI have concluded my participation and scored ${totalPoints} points.\nHere is my evidence:\n\n${urlListText}Best,\n${playerName}`;
 
             const mailtoLink = `mailto:${coupleEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
