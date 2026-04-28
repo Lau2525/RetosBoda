@@ -47,7 +47,9 @@ const uiTexts = {
         concludeDesc: "Da click cuando te sientas satisfecho con tus retos cumplidos para concluir tu participación",
         concludeBtn: "Concluir mi participación",
         concludeSuccess: "¡Gracias por participar! Tu evidencia y tus puntos han sido enviados a los novios directamente.",
-        concludeErr: "Hubo un error al enviar. ¿Aún tienes internet?"
+        concludeErr: "Hubo un error al enviar. ¿Aún tienes internet?",
+        deleteBtn: "Borrar mi usuario",
+        deleteConfirm: "⚠️ ¿Estás de acuerdo? Esto borrará tu usuario del tablero y se perderá TODO tu avance. Tendrás que empezar desde cero."
     },
     en: {
         title: "Wedding Challenges",
@@ -72,7 +74,9 @@ const uiTexts = {
         concludeDesc: "Click when you feel satisfied with your completed challenges to conclude your participation",
         concludeBtn: "Conclude my participation",
         concludeSuccess: "Thank you for participating! Your evidence and points have been sent to the couple.",
-        concludeErr: "There was an error sending. Try checking your internet connection."
+        concludeErr: "There was an error sending. Try checking your internet connection.",
+        deleteBtn: "Delete my user",
+        deleteConfirm: "⚠️ Are you sure? This will delete your user from the board and ALL your progress will be lost. You will have to start from scratch."
     }
 };
 
@@ -122,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const lbModal = document.getElementById("leaderboard-modal");
     const btnLeaderboard = document.getElementById("btn-leaderboard");
+    const btnDeleteUser = document.getElementById("btn-delete-user");
     const btnConclude = document.getElementById("btn-conclude");
     const clseLb = document.getElementById("close-leaderboard");
 
@@ -319,7 +324,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("conclude-desc").textContent = uiTexts[lang].concludeDesc;
         document.getElementById("lbl-conclude-btn").textContent = uiTexts[lang].concludeBtn;
-        
+        if (document.getElementById("lbl-delete-btn")) {
+            document.getElementById("lbl-delete-btn").textContent = uiTexts[lang].deleteBtn;
+        }
+
         document.getElementById("name-title").textContent = uiTexts[lang].welcomeTitle;
         document.getElementById("name-instruction").textContent = uiTexts[lang].welcomeInstr;
         document.getElementById("name-submit-btn").textContent = uiTexts[lang].startBtn;
@@ -399,7 +407,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkName() {
         if (!playerName) {
             nameModal.classList.add('show');
+            if (btnDeleteUser) btnDeleteUser.style.display = "none";
         } else {
+            if (btnDeleteUser) btnDeleteUser.style.display = "inline-block";
             document.getElementById("display-name").textContent = playerName;
             document.getElementById("player-info-container").style.display = "flex";
             calculatePoints();
@@ -413,11 +423,33 @@ document.addEventListener("DOMContentLoaded", () => {
             playerName = val;
             saveState();
             nameModal.classList.remove('show');
+            if (btnDeleteUser) btnDeleteUser.style.display = "inline-block";
             document.getElementById("display-name").textContent = playerName;
             document.getElementById("player-info-container").style.display = "flex";
             updateLiveScore(); 
         }
     });
+
+    if (btnDeleteUser) {
+        btnDeleteUser.addEventListener("click", () => {
+            if (confirm(uiTexts[currentLang].deleteConfirm)) {
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.includes("script.google.com") && playerName) {
+                    fetch(GOOGLE_SCRIPT_URL, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            type: "delete_user",
+                            playerName: playerName
+                        })
+                    }).catch(err => console.error("Error deleting user:", err));
+                }
+                localStorage.removeItem('weddingChallengesName');
+                localStorage.removeItem('weddingChallengesCompleted');
+                localStorage.removeItem('weddingChallengesUrls');
+                localStorage.removeItem('weddingChallengesTexts');
+                window.location.reload();
+            }
+        });
+    }
 
     // GOOGLE DRIVE LIVE LEADERBOARD
     btnLeaderboard.addEventListener("click", () => {
@@ -469,11 +501,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function renderMockLeaderboard() {
             list.innerHTML = '';
-            const allPlayers = [
-                { name: "Carlos M.", pts: 110 },
-                { name: "Sofía T.", pts: 95 },
-                { name: playerName || (currentLang === 'es' ? "Tú" : "You"), pts: totalPoints, isCurrent: true }
-            ];
+            const allPlayers = [];
+            if (playerName) {
+                allPlayers.push({ name: playerName, pts: totalPoints, isCurrent: true });
+            }
             allPlayers.sort((a, b) => b.pts - a.pts);
             allPlayers.forEach((p, index) => {
                 const div = document.createElement("div");
